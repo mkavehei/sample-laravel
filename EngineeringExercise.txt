@@ -1,15 +1,9 @@
-
-
-
 Please write a program that stores a catalog of books where a user can search and view the details when a book is selected.
-
 
 Specs:
 A book has a title, description/synopsis, date published, ISBN.
 A book can also have one to many authors
 An author will have a firstname and a lastname
-
-
 
 
 User Experience:
