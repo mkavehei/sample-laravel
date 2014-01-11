@@ -1,4 +1,3 @@
-Please write a program that stores a catalog of books where a user can search and view the details when a book is selected.
 
 Specs:
 A book has a title, description/synopsis, date published, ISBN.
