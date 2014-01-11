@@ -1,0 +1,29 @@
+ReTargeter Engineering Candidates Exercise:
+
+
+Please write a program that stores a catalog of books where a user can search and view the details when a book is selected.
+
+
+Specs:
+A book has a title, description/synopsis, date published, ISBN.
+A book can also have one to many authors
+An author will have a firstname and a lastname
+
+
+
+
+User Experience:
+A user will use a single search field that will be able to search the catalog by title, ISBN, or author name. When the user hits the submit button or presses ‘Enter’, the list of possible matches will be AJAX loaded on the bottom of the form.  A user should then be able to select any of the listed books and have the details display in a popup/modal.  
+
+
+Please use the following technology:
+LAMP, Laravel 4, jQuery ( For css twitter bootstrap is recommended )
+
+
+Important:
+We will use the built-in Artisan CLI from Laravel to migrate and seed the database so please read the documentation on the Laravel website. Also, with your source code, include the steps to get your program up and running in a browser.
+
+
+http://laravel.com/docs
+http://getbootsrap.com
+http://jquery.com
