@@ -1,0 +1,137 @@
+<?php
+require_once("app/controllers/BookController.php");
+require_once("app/controllers/AuthorController.php");
+?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head><title>ReTargeter: Engineering Exercise</title>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>  
+<script src="http://code.jquery.com/jquery-1.8.2.js"></script>
+<script src="http://code.jquery.com/ui/1.9.1/jquery-ui.js"></script> 
+
+<script type="text/javascript">/* <![CDATA[ */
+$(document).ready(function(){
+  var popupStatus = 0;
+  
+  // find authors list //
+  #("#book_id").live("click", function(e){
+    var id = $(this).attr('id');
+    $.post('/author/findauthors/', {'id':id }, function(data) { 
+        obj = jQuery.parseJSON(data);
+        if ( empty(obj.msg) ) { 
+     if(popupStatus==0){
+       centerPopup(id);
+            $("#popupBackground").css({
+               "opacity": "0.4"
+            });
+            $("#popupBackground").fadeIn("slow");
+            $("#popupOpen").fadeIn("slow");
+            popupStatus = 1;
+          }          
+   } else {
+
+} 
+});
+  });
+  
+  
+  function centerPopup(list){
+    $("#popupData").html(list);
+$("#popupClose").html("X");
+    //request data for centering
+    var windowWidth = document.documentElement.clientWidth;
+    var windowHeight = document.documentElement.clientHeight;
+    var popupHeight = $("#popupData").height();
+    var popupWidth = $("#popupData").width();
+
+    //centering
+    $("#popupOpen").css({
+     "position": "absolute", 
+     "top": windowHeight/4-popupHeight/4,
+     "left": windowWidth/3-popupWidth/3 
+    });
+
+    //only need force for IE6
+    $("#popupBackground").css({
+        "height": windowHeight
+    });  
+return true; 
+  }
+  
+  // helper function //
+  $(".popupClose").live("click", function(e){ 
+      //disables popup only if it is enabled
+      if(popupStatus==1){
+        $("#popupBackground").fadeOut("slow");
+        $("#popupOpen").fadeOut("slow");
+        popupStatus = 0;
+      }
+  });  
+
+  // submit Action //
+  $(".submit").click(function(){
+    var keyword = $("#keyword").val();
+var rtype = $("#sform input[type='radio']:checked").val();
+$.post('/book/findbook/', {'keyword':keyword,'type':rtype}, function(data) { 
+       obj = jQuery.parseJSON(data); 
+  if ( empty(obj.msg) ) { 
+    $(".list").html(obj.list); 
+  } else {
+    $(".list").html(obj.msg);
+  } 
+     });
+
+  });
+    
+});/*]]>*/
+</script>  
+
+<style type="text/css">
+    body{background-color:#fffafa;}
+    .form{float:left;margin-top:80px;text-align:left;padding:30px;background-color:#ddd;}
+    .submit{padding:5px 10px 5px 10px;background-color:#375099;color:#fff;}
+.stype{display:inline-block;margin-right:5px;}
+.search_key{margin-bottom:5px;}
+.search_submit{margin-bottom:5px;}
+
+.list{margin-bottom:20px;padding:10px;}
+.book_row, .author_row{margin-bottom:10px;float:left;text-align:left;}
+.book_id, .book_title, .book_isbn, .book_desc, .author_fname, .author_lname{ 
+ display:inline-block;
+ text-align:left;
+ margin-right:5px;
+ float:none;
+}
+
+</style>
+   
+</head>   
+<body>
+<div id="popupBackground"></div>
+  
+  <div class="form">
+  <form id="sform">
+<div class="search_key">
+      <div class="stype">Search For <input type="text" name="keyword" id="keyword"></div>
+ <div class="stype"><input type="radio" name="type" value="title" class="rtype"/>Title</div>
+      <div class="stype"><input type="radio" name="type" value="isbn" class="rtype" checked="checked" />ISBN</div>
+ <div class="stype"><input type="radio" name="type" value="author" class="rtype" />Author</div>
+</div>  
+<div class="search_submit">
+      <button class="submit">Submit</button>
+</div> 
+  </form>
+  </div>
+  
+  <div class="list">
+  </div>
+
+  
+  <div id="popupOpen">
+    <div id="popupClose"></div>
+<div id="popupData"></div>
+  </div>
+  
+  
+</body>
+</html>
